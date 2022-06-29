@@ -32,11 +32,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $lastName;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $username;
-
-    /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
@@ -69,11 +64,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getUsername(): ?string
     {
-        return $this->username;
-    }
-
-    public function getEmail(): ?string
-    {
         return $this->email;
     }
 
@@ -91,14 +81,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function setUsername(string $username): self
-    {
-        $this->username = $username;
-
-        return $this;
-    }
-
-    public function setEmail(string $email): self
+    public function setUsername(string $email): self
     {
         $this->email = $email;
 
