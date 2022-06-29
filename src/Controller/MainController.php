@@ -2,14 +2,24 @@
 
 namespace App\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
-class MainController
+/**
+ * @Route("/", name="app_")
+ */
+class MainController extends AbstractController
 {
-    public function index($name)
+    /**
+     * @Route(name="index")
+     */
+    public function index()
     {
-        return new Response(sprintf('Hello %s !', $name));
+        if($this->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->render('main/home.html.twig');
+        }
+
+        return $this->redirectToRoute('app_login');
     }
 }
-
-?>
