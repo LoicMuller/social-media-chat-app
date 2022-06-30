@@ -16,10 +16,10 @@ class MainController extends AbstractController
      */
     public function index()
     {
-        if($this->isGranted('IS_AUTHENTICATED_FULLY')) {
-            return $this->render('main/home.html.twig');
+        if(!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->redirectToRoute('app_login');
         }
 
-        return $this->redirectToRoute('app_login');
+        return $this->render('main/home.html.twig');
     }
 }

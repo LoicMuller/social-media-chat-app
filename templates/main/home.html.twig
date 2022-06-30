@@ -3,7 +3,7 @@
 {% block title %} {{ parent() }} | Accueil {% endblock %}
 
 {% block body %}
-
-    Hello World
-
+    <main>
+        Bienvenue {{ app.user.firstName }} !
+    </main>
 {% endblock %}

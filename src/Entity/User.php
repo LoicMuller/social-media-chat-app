@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @UniqueEntity(fields={"email"}, message="Il existe déjà un compte associé à cette adresse email")
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -62,7 +62,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->lastName;
     }
 
-    public function getUsername(): ?string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
@@ -81,7 +81,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function setUsername(string $email): self
+    public function setEmail(string $email): self
     {
         $this->email = $email;
 
@@ -94,6 +94,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @see UserInterface
      */
     public function getUserIdentifier(): string
+    {
+        return (string) $this->email;
+    }
+
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUsername(): string
     {
         return (string) $this->email;
     }

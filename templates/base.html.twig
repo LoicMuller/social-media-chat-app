@@ -3,7 +3,6 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         <link rel="icon" href="{{ asset('img/favicon.ico') }}">
         <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('img/apple-touch-icon.png') }}">
         <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('img/favicon-32x32.png') }}">
@@ -14,6 +13,12 @@
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
+
+        {% if app.user %}
+        <header>
+            {% include('inc/header.html.twig') %}
+        </header>
+        {% endif %}
 
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}

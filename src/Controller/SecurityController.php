@@ -67,6 +67,7 @@ class SecurityController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
+            $user->setRoles(['ROLE_USER']);
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
@@ -218,9 +219,9 @@ class SecurityController extends AbstractController
         }
 
         $email = (new TemplatedEmail())
-            ->from(new Address('alt.dw-9o2f2i63@yopmail.com', 'alt'))
+            ->from(new Address('soc.med.ch.app@gmail.com', 'temp-mail'))
             ->to($user->getEmail())
-            ->subject('Your password reset request')
+            ->subject('Réinitialisation de votre mot de passe')
             ->htmlTemplate('reset_password/email.html.twig')
             ->context([
                 'resetToken' => $resetToken,
