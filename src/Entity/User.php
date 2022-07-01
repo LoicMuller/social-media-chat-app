@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -46,6 +48,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Message::class, mappedBy="user_id")
+     */
+    private $messages;
+
+    /**
+     * @ORM\OneToMany(targetEntity=LinkedAccounts::class, mappedBy="user_id")
+     */
+    private $linkedAccounts;
+
+    public function __construct()
+    {
+        $this->messages = new ArrayCollection();
+        $this->linkedAccounts = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -160,5 +178,65 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection<int, Message>
+     */
+    public function getMessages(): Collection
+    {
+        return $this->messages;
+    }
+
+    public function addMessage(Message $message): self
+    {
+        if (!$this->messages->contains($message)) {
+            $this->messages[] = $message;
+            $message->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessage(Message $message): self
+    {
+        if ($this->messages->removeElement($message)) {
+            // set the owning side to null (unless already changed)
+            if ($message->getUserId() === $this) {
+                $message->setUserId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, LinkedAccounts>
+     */
+    public function getLinkedAccounts(): Collection
+    {
+        return $this->linkedAccounts;
+    }
+
+    public function addLinkedAccount(LinkedAccounts $linkedAccount): self
+    {
+        if (!$this->linkedAccounts->contains($linkedAccount)) {
+            $this->linkedAccounts[] = $linkedAccount;
+            $linkedAccount->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLinkedAccount(LinkedAccounts $linkedAccount): self
+    {
+        if ($this->linkedAccounts->removeElement($linkedAccount)) {
+            // set the owning side to null (unless already changed)
+            if ($linkedAccount->getUserId() === $this) {
+                $linkedAccount->setUserId(null);
+            }
+        }
+
+        return $this;
     }
 }
