@@ -6,6 +6,13 @@
 
     <h1>Message</h1>
 
-    <a href="{{ path('app_index') }}">Envoyer</a>
+    {{ form_start(messageForm) }}
 
+        {{ form_row(messageForm.content) }}
+        {{ form_row(messageForm.planified_at) }}
+        {{ form_row(messageForm.socialMedia) }}
+
+    <button type="submit">Envoyer</button>
+
+    {{ form_end(messageForm) }}
 {% endblock %}
