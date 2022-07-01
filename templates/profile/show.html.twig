@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ parent() }} | Profile {% endblock %}
+
+{% block body %}
+
+    <h1>Profil</h1>
+
+    <a href="{{ path('profile_edit') }}">Modifier</a>
+
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ parent() }} | Message {% endblock %}
+
+{% block body %}
+
+    <h1>Messages envoyés</h1>
+
+    <a href="{{ path('app_index') }}">Retour</a>
+
+{% endblock %}
