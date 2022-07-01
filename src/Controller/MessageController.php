@@ -5,7 +5,9 @@ namespace App\Controller;
 use App\Entity\Message;
 use App\Entity\Status;
 use App\Form\MessageFormType;
+use App\Repository\MessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -53,18 +55,28 @@ class MessageController extends AbstractController
     }
 
     /**
-     * @Route("/sent", name="sent")
+     * @Route("/sent", name="sent", methods={"GET"})
      */
-    public function messagesSent()
+    public function messagesSent(MessageRepository $messageRepo): Response
     {
-        return $this->render('message/sent.html.twig');
+        return $this->render('message/sent.html.twig', [
+            'messages' => $messageRepo->findBy(
+                ['status' => 'sent'],
+                ['created_at' => 'ASC']
+            ),
+        ]);
     }
 
     /**
-     * @Route("/planified", name="planified")
+     * @Route("/planified", name="planified", methods={"GET"})
      */
-    public function messagesPlanified()
+    public function messagesPlanified(MessageRepository $messageRepo): Response
     {
-        return $this->render('message/planified.html.twig');
+        return $this->render('message/planified.html.twig', [
+            'messages' => $messageRepo->findBy(
+                ['status' => 'planified'],
+                ['created_at' => 'ASC']
+            )
+        ]);
     }
 }
