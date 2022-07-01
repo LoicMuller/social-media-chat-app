@@ -55,14 +55,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $messages;
 
     /**
-     * @ORM\OneToMany(targetEntity=LinkedAccounts::class, mappedBy="user_id")
+     * @ORM\Column(type="json", nullable=true)
      */
-    private $linkedAccounts;
+    private $linkedAccounts = [];
 
     public function __construct()
     {
         $this->messages = new ArrayCollection();
-        $this->linkedAccounts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -138,9 +137,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return array_unique($roles);
     }
 
+    public function getLinkedAccounts(): array
+    {
+        return $this->linkedAccounts;
+    }
+
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
+
+        return $this;
+    }
+
+    public function setLinkedAccounts(array $linkedAccounts): self
+    {
+        $this->linkedAccounts = $linkedAccounts;
 
         return $this;
     }
@@ -204,36 +215,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($message->getUserId() === $this) {
                 $message->setUserId(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, LinkedAccounts>
-     */
-    public function getLinkedAccounts(): Collection
-    {
-        return $this->linkedAccounts;
-    }
-
-    public function addLinkedAccount(LinkedAccounts $linkedAccount): self
-    {
-        if (!$this->linkedAccounts->contains($linkedAccount)) {
-            $this->linkedAccounts[] = $linkedAccount;
-            $linkedAccount->setUserId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLinkedAccount(LinkedAccounts $linkedAccount): self
-    {
-        if ($this->linkedAccounts->removeElement($linkedAccount)) {
-            // set the owning side to null (unless already changed)
-            if ($linkedAccount->getUserId() === $this) {
-                $linkedAccount->setUserId(null);
             }
         }
 

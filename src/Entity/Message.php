@@ -41,20 +41,14 @@ class Message
     private $created_at;
 
     /**
-     * @ORM\ManyToMany(targetEntity=SocialMedia::class)
+     * @ORM\Column(type="string", length=255)
      */
-    private $social_media_id;
+    private $status;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Status::class, inversedBy="messages")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="string", length=255)
      */
-    private $status_id;
-
-    public function __construct()
-    {
-        $this->social_media_id = new ArrayCollection();
-    }
+    private $socialMedia;
 
     public function getId(): ?int
     {
@@ -76,6 +70,16 @@ class Message
     public function getContent(): ?string
     {
         return $this->content;
+    }
+
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    public function getSocialMedia()
+    {
+        return $this->socialMedia;
     }
 
     public function setContent(string $content): self
@@ -109,38 +113,16 @@ class Message
         return $this;
     }
 
-    /**
-     * @return Collection<int, SocialMedia>
-     */
-    public function getSocialMediaId(): Collection
+    public function setStatus(string $status): self
     {
-        return $this->social_media_id;
-    }
-
-    public function addSocialMediaId(SocialMedia $socialMediaId): self
-    {
-        if (!$this->social_media_id->contains($socialMediaId)) {
-            $this->social_media_id[] = $socialMediaId;
-        }
+        $this->status = $status;
 
         return $this;
     }
 
-    public function removeSocialMediaId(SocialMedia $socialMediaId): self
+    public function setSocialMedia(string $socialMedia): self
     {
-        $this->social_media_id->removeElement($socialMediaId);
-
-        return $this;
-    }
-
-    public function getStatusId(): ?Status
-    {
-        return $this->status_id;
-    }
-
-    public function setStatusId(?Status $status_id): self
-    {
-        $this->status_id = $status_id;
+        $this->socialMedia = $socialMedia;
 
         return $this;
     }
