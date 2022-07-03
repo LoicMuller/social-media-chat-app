@@ -6,6 +6,7 @@ use App\Entity\Message;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,13 +20,7 @@ class MessageFormType extends AbstractType
                 'label' => 'Texte',
                 'required' => true,
             ])
-            ->add('planified_at', DateTimeType::class, [
-                'placeholder' => [
-                    'year' => 'Year', 'month' => 'Month', 'day' => 'Day',
-                    'hour' => 'Hour', 'minute' => 'Minute',
-                ],
-                'required' => false,
-            ])
+            ->add('planified_at', HiddenType::class)
             ->add('socialMedia', ChoiceType::class, [
                 'label' => 'Reseau social',
                 'choices' => [

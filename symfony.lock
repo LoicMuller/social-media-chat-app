@@ -236,5 +236,8 @@
         "files": [
             "./config/packages/reset_password.yaml"
         ]
+    },
+    "twig/extra-bundle": {
+        "version": "v3.4.0"
     }
 }

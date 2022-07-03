@@ -76,10 +76,11 @@ class MessageController extends AbstractController
      */
     public function messagesSent(MessageRepository $messageRepo): Response
     {
+        $user = $this->security->getUser();
         return $this->render('message/sent.html.twig', [
             'messages' => $messageRepo->findBy(
-                ['status' => 'sent'],
-                ['created_at' => 'ASC']
+                ['user_id' => $user, 'status' => 'sent'],
+                ['created_at' => 'DESC']
             ),
         ]);
     }
@@ -89,10 +90,11 @@ class MessageController extends AbstractController
      */
     public function messagesPlanified(MessageRepository $messageRepo): Response
     {
+        $user = $this->security->getUser();
         return $this->render('message/planified.html.twig', [
             'messages' => $messageRepo->findBy(
-                ['status' => 'planified'],
-                ['created_at' => 'ASC']
+                ['user_id' => $user, 'status' => 'planified'],
+                ['created_at' => 'DESC']
             )
         ]);
     }
