@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Client\DiscordClientInterface;
+use App\Client\SlackClientInterface;
 use App\Entity\Message;
 use App\Entity\Status;
 use App\Form\MessageFormType;
@@ -22,9 +24,15 @@ class MessageController extends AbstractController
 
     private $security;
 
-    public function __construct(Security $security)
+    public function __construct(
+        Security               $security,
+        SlackClientInterface   $slackClient,
+        DiscordClientInterface $discordClient
+    )
     {
         $this->security = $security;
+        $this->slackClient = $slackClient;
+        $this->discordClient = $discordClient;
     }
 
     /**
@@ -45,6 +53,15 @@ class MessageController extends AbstractController
 
             $em->persist($message);
             $em->flush();
+
+            if ($message->getSocialMedia() == 'slack') {
+                $this->slackClient->executeRequest($message->getContent());
+            } elseif ($message->getSocialMedia() == 'discord') {
+                $this->discordClient->executeRequest($message->getContent());
+            } else {
+                $this->slackClient->executeRequest($message->getContent());
+                $this->discordClient->executeRequest($message->getContent());
+            }
 
             return $this->redirectToRoute('app_index');
         }

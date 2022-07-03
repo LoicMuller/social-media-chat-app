@@ -31,6 +31,7 @@ class MessageFormType extends AbstractType
                 'choices' => [
                     'Slack' => 'slack',
                     'Discord' => 'discord',
+                    'Les 2' => 'Slack & Discord',
                 ],
                 'required' => true,
             ]);
