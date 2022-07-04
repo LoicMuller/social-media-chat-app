@@ -3,12 +3,4 @@
 {% block title %} {{ parent() }} | Accueil {% endblock %}
 
 {% block body %}
-    <main>
-        Bienvenue {{ app.user.firstName }} !
-
-        <div class="messages">
-            <a href="{{ path('message_sent') }}">Messages envoyés</a>
-            <a href="{{ path('message_planified') }}">Messages planifiés</a>
-        </div>
-    </main>
 {% endblock %}

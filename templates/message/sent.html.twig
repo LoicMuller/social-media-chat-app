@@ -4,31 +4,69 @@
 
 {% block body %}
 
-    <h1>Messages envoyés</h1>
-
-    <div class="messages-container">
-        {% if messages is empty %}
-            <p>Il n'y a aucun message à afficher. <a href="{{ path('message_new') }}">Cliquez ici</a> pour en ajouter</p>
-        {% endif %}
-
-        {% for message in messages %}
-            {% if app.user.id == message.userId.id %}
-                <div class="sent-message">
-                    <h5>{{ app.user.firstName }} {{ app.user.lastName }}</h5>
-                    <p>{{ message.content }}</p>
-                    {% if date(message.createdAt) < date('-1day') %}
-                        <span>{{ message.createdAt|date('d/m/Y H:m') }}</span>
-                    {% else %}
-                        <span>{{ message.createdAt|date('H:m') }}</span>
-                    {% endif %}
-                    <span>&#10003;</span>
-                </div>
-            {% endif %}
-        {% endfor %}
-
-
+    <div class="mb-4">
+        <h1 class="h3 mb-0 text-gray-800">
+            Messages Envoyés
+        </h1>
     </div>
 
-    <a href="{{ path('app_index') }}">Retour</a>
+    {% if messages is empty %}
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <p class="h6 text-gray-800">
+                Il n'y a aucun message à afficher. <a href="{{ path('message_new') }}">Cliquez ici</a> pour en ajouter
+            </p>
+        </div>
+    {% endif %}
 
+    {% for message in app.flashes('success') %}
+        <div id="alert" class="col-xl-9 col-md-9 mb-4 alert alert-success font-weight-bold">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {% for message in messages %}
+        {% if app.user.id == message.userId.id %}
+            <div class="row">
+                <div class="col-xl-9 col-md-9 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body px-3 py-2">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                        {{ app.user.firstName }} {{ app.user.lastName }}
+                                    </div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                        {{ message.content }}
+                                    </div>
+                                </div>
+                                <div class="col-auto">
+                                    {% if date(message.createdAt) < date('-1day') %}
+                                        {{ message.createdAt|date('d/m/Y H:m') }}
+                                    {% else %}
+                                        {{ message.createdAt|date('H:m') }}
+                                    {% endif %}
+                                    {% if message.socialMedia == 'Slack & Discord' %}
+                                        | <i class="fab fa-slack text-gray-800"></i> & <i
+                                            class="fab fa-discord text-gray-800"></i>
+                                    {% elseif message.socialMedia == 'Discord' %}
+                                        | <i class="fab fa-discord text-gray-800"></i>
+                                    {% else %}
+                                        | <i class="fab fa-slack text-gray-800"></i>
+                                    {% endif %}
+                                    | <i class="fas fa-check text-gray-800"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+
+    <script>
+        let successMsg = document.querySelector('#alert');
+        setTimeout(function() {
+            successMsg.remove();
+        }, 3000)
+    </script>
 {% endblock %}

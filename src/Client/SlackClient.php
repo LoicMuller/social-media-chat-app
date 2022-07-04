@@ -6,14 +6,14 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 final class SlackClient implements SlackClientInterface
 {
-    private string $webhookUrl;
+    private string $slackWebhookUrl;
 
     public function __construct(
         HttpClientInterface $httpClient,
-        string $webhookUrl
+        string $slackWebhookUrl
     ) {
         $this->httpClient = $httpClient;
-        $this->webhookUrl = $webhookUrl;
+        $this->slackWebhookUrl = $slackWebhookUrl;
     }
 
     public function executeRequest(string $content): string
@@ -27,7 +27,7 @@ final class SlackClient implements SlackClientInterface
             ]
         ];
 
-        $response = $this->httpClient->request('POST', $this->webhookUrl, $options);
+        $response = $this->httpClient->request('POST', $this->slackWebhookUrl, $options);
 
         return $response->getContent();
     }

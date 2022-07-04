@@ -21,37 +21,36 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('firstName', TextType::class, [
+                'attr' => ['class' => 'form-control form-control-user'],
                 'label' => 'Prénom',
                 'required' => true,
             ])
             ->add('lastName', TextType::class, [
+                'attr' => ['class' => 'form-control form-control-user'],
                 'label' => 'Nom',
                 'required' => true,
             ])
             ->add('email', EmailType::class, [
-                'label' => 'Adresse email',
+                'attr' => ['class' => 'form-control form-control-user'],
+                'label' => 'Adresse Email',
                 'required' => true,
             ])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
-                'invalid_message' => 'Les mots de passes doivent être identiques.',
-                'first_options' => ['label' => 'Mot de passe'],
-                'second_options' => ['label' => 'Confirmer le mot de passe'],
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
-                'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
+                'first_options' => ['label' => 'Mot de Passe'] ,
+                'second_options' => ['label' => 'Confirmation'] ,
+                'invalid_message' => 'Les mots de passes doivent être identiques.',
+                'mapped' => false,
                 'required' => true,
                 'constraints' => [
                     new Length([
                         'min' => 6,
                         'minMessage' => 'Votre mot de passe doit contenir au moins {{ limit }} caractères',
-                        // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
                 ],
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

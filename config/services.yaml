@@ -24,8 +24,8 @@ services:
     # please note that last definitions always *replace* previous ones
 
     App\Client\SlackClient:
-        $webhookUrl: '%env(SLACK_WEBHOOK_URL)%'
+        $slackWebhookUrl: '%env(SLACK_WEBHOOK_URL)%'
 
     App\Client\DiscordClient:
-        $webhookUrl: '%env(DISCORD_WEBHOOK_URL)%'
+        $discordWebhookUrl: '%env(DISCORD_WEBHOOK_URL)%'
 

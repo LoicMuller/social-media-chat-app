@@ -6,14 +6,14 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 final class DiscordClient implements DiscordClientInterface
 {
-    private string $webhookUrl;
+    private string $discordWebhookUrl;
 
     public function __construct(
         HttpClientInterface $httpClient,
-        string $webhookUrl
+        string $discordWebhookUrl
     ) {
         $this->httpClient = $httpClient;
-        $this->webhookUrl = $webhookUrl;
+        $this->discordWebhookUrl = $discordWebhookUrl;
     }
 
     public function executeRequest(string $content): string
@@ -27,7 +27,7 @@ final class DiscordClient implements DiscordClientInterface
             ]
         ];
 
-        $response = $this->httpClient->request('POST', $this->webhookUrl, $options);
+        $response = $this->httpClient->request('POST', $this->discordWebhookUrl, $options);
 
         return $response->getContent();
     }

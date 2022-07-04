@@ -24,8 +24,8 @@ class MessageFormType extends AbstractType
             ->add('socialMedia', ChoiceType::class, [
                 'label' => 'Reseau social',
                 'choices' => [
-                    'Slack' => 'slack',
-                    'Discord' => 'discord',
+                    'Slack' => 'Slack',
+                    'Discord' => 'Discord',
                     'Les 2' => 'Slack & Discord',
                 ],
                 'required' => true,

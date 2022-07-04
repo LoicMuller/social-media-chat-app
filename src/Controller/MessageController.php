@@ -23,6 +23,10 @@ class MessageController extends AbstractController
 {
 
     private $security;
+    CONST SLACK = 'Slack';
+    CONST DISCORD = 'Discord';
+    CONST SENT = 'sent';
+    CONST PLANIFIED = 'planified';
 
     public function __construct(
         Security               $security,
@@ -48,20 +52,22 @@ class MessageController extends AbstractController
             $user = $this->security->getUser();
 
             $message->setUserId($user);
-            ($message->getPlanifiedAt() != null) ? $message->setStatus('planified') : $message->setStatus('sent');
+            ($message->getPlanifiedAt() != null) ? $message->setStatus(MessageController::PLANIFIED) : $message->setStatus(MessageController::SENT);
             $message->setCreatedAt(new \DateTimeImmutable('now'));
 
             $em->persist($message);
             $em->flush();
 
-            if ($message->getSocialMedia() == 'slack') {
+            if ($message->getSocialMedia() == MessageController::SLACK) {
                 $this->slackClient->executeRequest($message->getContent());
-            } elseif ($message->getSocialMedia() == 'discord') {
+            } elseif ($message->getSocialMedia() == MessageController::DISCORD) {
                 $this->discordClient->executeRequest($message->getContent());
             } else {
                 $this->slackClient->executeRequest($message->getContent());
                 $this->discordClient->executeRequest($message->getContent());
             }
+
+            $this->addFlash('success', 'Message envoyé avec succès !');
 
             return $this->redirectToRoute('app_index');
         }

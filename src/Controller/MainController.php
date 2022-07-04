@@ -14,12 +14,12 @@ class MainController extends AbstractController
     /**
      * @Route(name="index")
      */
-    public function index()
+    public function index(): Response
     {
         if(!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
             return $this->redirectToRoute('app_login');
         }
 
-        return $this->render('main/home.html.twig');
+        return $this->redirectToRoute('message_sent');
     }
 }
