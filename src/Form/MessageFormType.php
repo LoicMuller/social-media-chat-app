@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
 
 class MessageFormType extends AbstractType
 {
@@ -17,12 +18,25 @@ class MessageFormType extends AbstractType
     {
         $builder
             ->add('content', TextType::class, [
-                'label' => 'Texte',
+                'attr' => [
+                    'class' => 'form-control',
+                    'placeholder' => 'Envoyer un message...',
+                ],
+                'label' => 'Message',
                 'required' => true,
+                'constraints' => [
+                    new Length([
+                        'min' => 1,
+                        'minMessage' => 'Votre message ne peut pas être vide',
+                        'max' => 555,
+                        'maxMessage' => 'Votre message ne peut pas contenir autant de caractères : ( {{ limit }} caractères autorisés )'
+                    ]),
+                ],
             ])
             ->add('planified_at', HiddenType::class)
             ->add('socialMedia', ChoiceType::class, [
-                'label' => 'Reseau social',
+                'label' => 'Réseau Social',
+                'attr' => ['class' => 'form-control col-lg-6 mx-auto'],
                 'choices' => [
                     'Slack' => 'Slack',
                     'Discord' => 'Discord',

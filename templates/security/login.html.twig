@@ -14,6 +14,12 @@
                                 <div class="p-5">
                                     <div class="text-center">
                                         {% if not is_granted('ROLE_USER') %}
+                                        {% if error %}
+                                            {% if error.messageKey|trans(error.messageData, 'security') == 'Invalid credentials.' %}
+                                                {% set invalidCreds = 'Adresse email et/ou mot de passe incorrect.' %}
+                                            {% endif %}
+                                            <div class="text-danger list-unstyled text-center font-weight-bold p-3">{{ invalidCreds }}</div>
+                                        {% endif %}
                                         <h1 class="h4 text-gray-900 mb-4">Connexion</h1>
                                     </div>
                                     <form method="post" class="user">
@@ -59,17 +65,11 @@
                                         </div>
                                         {% endif %}
                                     </form>
-                                    <form method="post">
-                                        {% if error %}
-                                            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                                        {% endif %}
-
                                         {% if app.user %}
                                             <div class="mb-3">
                                                 Vous êtes connecté en tant que {{ app.user.userIdentifier }}.
                                             </div>
                                         {% endif %}
-                                    </form>
                                 </div>
                             </div>
                         </div>

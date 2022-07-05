@@ -21,25 +21,32 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('firstName', TextType::class, [
-                'attr' => ['class' => 'form-control form-control-user'],
-                'label' => 'Prénom',
+                'attr' => [
+                    'class' => 'form-control form-control-user',
+                    'placeholder' => 'Prénom',
+                ],
                 'required' => true,
             ])
             ->add('lastName', TextType::class, [
-                'attr' => ['class' => 'form-control form-control-user'],
-                'label' => 'Nom',
+                'attr' => [
+                    'class' => 'form-control form-control-user',
+                    'placeholder' => 'Nom',
+                ],
                 'required' => true,
             ])
             ->add('email', EmailType::class, [
-                'attr' => ['class' => 'form-control form-control-user'],
-                'label' => 'Adresse Email',
+                'attr' => [
+                    'class' => 'form-control form-control-user',
+                    'placeholder' => 'Adresse Email',
+                ],
                 'required' => true,
             ])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'attr' => ['autocomplete' => 'new-password'],
-                'first_options' => ['label' => 'Mot de Passe'] ,
-                'second_options' => ['label' => 'Confirmation'] ,
+                'options' => ['attr' => ['class' => 'form-control form-control-user']],
+                'first_options' => ['label' => 'Mot de Passe'],
+                'second_options' => ['label' => 'Confirmation'],
                 'invalid_message' => 'Les mots de passes doivent être identiques.',
                 'mapped' => false,
                 'required' => true,

@@ -10976,6 +10976,10 @@ form.user .btn-user {
   width: 12.5rem;
 }
 
+.error_msg {
+  color: red;
+}
+
 @-webkit-keyframes noise-anim {
   0% {
     clip: rect(49px, 9999px, 40px, 0);
