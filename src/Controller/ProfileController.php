@@ -17,12 +17,4 @@ class ProfileController extends AbstractController
     {
         return $this->render('profile/show.html.twig');
     }
-
-    /**
-     * @Route("/edit", name="edit")
-     */
-    public function edit()
-    {
-        return $this->render('profile/edit.html.twig');
-    }
 }
