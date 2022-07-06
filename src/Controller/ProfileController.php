@@ -15,6 +15,7 @@ class ProfileController extends AbstractController
      */
     public function index()
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         return $this->render('profile/show.html.twig');
     }
 }
