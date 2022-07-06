@@ -20,5 +20,9 @@
     },
     "dependencies": {
         "jquery": "^3.6.0"
+    },
+    "engines": {
+        "node": "v14.17.*",
+        "npm": "6.14.*"
     }
 }
