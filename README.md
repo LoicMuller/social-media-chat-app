@@ -43,10 +43,6 @@ sudo apt update
 sudo apt install curl yarn npm
 ```
 
-Démarrer le serveur symfony
-
-`php -S 127.0.0.1:8000 -t ./public/`
-
 Mettre à jour yarn 
 
 `sudo curl --compressed -o- -L https://yarnpkg.com/install.sh | bash`
@@ -66,3 +62,15 @@ yarn build
 yarn encore dev
 yarn watch
 ```
+
+Créer la base de données à l'aide du fichier .env
+
+`php bin/console doctrine:database:create`
+
+Créer le schema de la base à partir des entités présentes dans le projet
+
+`php bin/console doctrine:schema:create`
+
+Démarrer le serveur symfony
+
+`php -S 127.0.0.1:8000 -t ./public/`
